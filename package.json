@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "nextjs-starter",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -9,6 +9,8 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "prettier": "^3.6.2",
     "turbo": "^2.5.4",
     "typescript": "5.8.3"
