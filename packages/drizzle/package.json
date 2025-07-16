@@ -1,10 +1,10 @@
 {
-  "name": "@repo/database",
+  "name": "@repo/drizzle",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "generate": "drizzle-kit generate:pg",
-    "migrate": "drizzle-kit push:pg",
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit push",
     "studio": "drizzle-kit studio"
   },
   "dependencies": {
