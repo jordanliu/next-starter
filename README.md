@@ -1,65 +1,75 @@
 # next-starter
 
-A heavily opinionated NextJS starter.
+A highly opinionated NextJS starter with authentication, database, UI components, and monorepo support—all preconfigured for rapid development.
 
-## Using this example
+## Features
 
-Run the following command:
+- Authentication with Better Auth
+- Database with Drizzle ORM and PostgreSQL
+- UI components built with shadcn/ui and Tailwind CSS
+
+## Getting Started
+
+### 1. Clone the Repository
 
 ```sh
-npx create-turbo@latest
+git clone https://github.com/jordanliu/next-starter.git
+cd next-starter
 ```
 
+### 2. Install Dependencies
+
+```sh
+pnpm install
+```
+
+### 3. Set Up the Database
+
+```sh
 pnpm --filter @repo/database run generate
 pnpm --filter @repo/database run migrate
-pnpm dlx shadcn@canary add input
+```
 
-## Clone
+### 4. Start the Development Server
 
 ```sh
-npx create-next-app@latest name --example https://github.com/jordanliu/next-starter --use-pnpm
+pnpm dev
 ```
 
-### Build
+## Build
 
-To build all apps and packages, run the following command:
+To build all apps and packages:
 
-```
-cd next-starter
+```sh
+# From the project root
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
+# With global turbo (recommended)
 turbo build
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
+# Or with your package manager
 pnpm exec turbo build
 ```
 
-### Develop
+## Develop
 
-To develop all apps and packages, run the following command:
+To run development mode for all apps and packages:
 
-```
-cd next-starter
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
+```sh
+# With global turbo
 turbo dev
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
+# Or with your package manager
 pnpm exec turbo dev
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+To develop a specific package:
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
+```sh
+# With global turbo
 turbo dev --filter=web
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
+# Or with your package manager
 pnpm exec turbo dev --filter=web
 ```
+
+More on filters: [Turborepo docs](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
