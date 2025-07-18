@@ -12,6 +12,7 @@ npx create-turbo@latest
 
 pnpm --filter @repo/database run generate
 pnpm --filter @repo/database run migrate
+pnpm dlx shadcn@canary add input
 
 ## Clone
 
