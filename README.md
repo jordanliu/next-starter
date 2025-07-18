@@ -1,6 +1,6 @@
 # next-starter
 
-A highly opinionated NextJS starter with authentication, database, UI components, and monorepo support—all preconfigured for rapid development.
+A highly opinionated NextJS starter with authentication, database, UI components, and monorepo support. All preconfigured for rapid development.
 
 ## Features
 
@@ -10,11 +10,11 @@ A highly opinionated NextJS starter with authentication, database, UI components
 
 ## Getting Started
 
-### 1. Clone the Repository
+### 1. Create the Project
 
 ```sh
-git clone https://github.com/jordanliu/next-starter.git
-cd next-starter
+npx create-next-app@latest [project-name] --use-pnpm --example https://github.com/jordanliu/next-starter.git
+cd [project-name]
 ```
 
 ### 2. Install Dependencies
@@ -70,6 +70,18 @@ turbo dev --filter=web
 
 # Or with your package manager
 pnpm exec turbo dev --filter=web
+```
+
+Add a new package
+
+```sh
+turbo gen
+```
+
+Add a new shadcn component to UI
+
+```sh
+(cd apps/web && pnpm dlx shadcn@canary add [COMPONENT])
 ```
 
 More on filters: [Turborepo docs](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)

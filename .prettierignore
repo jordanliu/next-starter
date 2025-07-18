@@ -3,3 +3,4 @@ pnpm-lock.yaml
 .next
 .turbo
 dist
+turbo/generators/templates
