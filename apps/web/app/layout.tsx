@@ -15,8 +15,8 @@ const fontMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "ACME, inc",
-  description: "ACME, inc",
+  title: "next-starter",
+  description: "next-starter",
 };
 
 export default function RootLayout({

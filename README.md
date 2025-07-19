@@ -1,16 +1,23 @@
 # next-starter
 
-A highly opinionated NextJS starter with authentication, database, UI components, and monorepo support. All preconfigured for rapid development.
+A highly opinionated NextJS starter with authentication, database integration, reusable UI components, email support, and full monorepo tooling. Pre-configured for rapid, scalable development.
+
+---
 
 ## Features
 
-- Authentication with Better Auth
-- Database with Drizzle ORM and PostgreSQL
-- UI components built with shadcn/ui and Tailwind CSS
+- Authentication with [Better Auth](https://github.com/jordanliu/better-auth)
+- Database using [Drizzle ORM](https://orm.drizzle.team/) and PostgreSQL
+- UI components built with [shadcn/ui](https://ui.shadcn.com) and Tailwind CSS
+- Email support with [react-email](https://react.email)
+- Form handling via [react-hook-form](https://react-hook-form.com)
+- Monorepo setup using [Turborepo](https://turbo.build/repo)
+
+---
 
 ## Getting Started
 
-### 1. Create the Project
+### 1. Create a New Project
 
 ```sh
 npx create-next-app@latest [project-name] --use-pnpm --example https://github.com/jordanliu/next-starter.git
@@ -36,52 +43,44 @@ pnpm --filter @repo/database run migrate
 pnpm dev
 ```
 
+---
+
 ## Build
 
 To build all apps and packages:
 
 ```sh
-# From the project root
-
-# With global turbo (recommended)
-turbo build
-
-# Or with your package manager
 pnpm exec turbo build
 ```
 
+---
+
 ## Develop
 
-To run development mode for all apps and packages:
+### Run Development Mode for All Apps and Packages
 
 ```sh
-# With global turbo
-turbo dev
-
-# Or with your package manager
 pnpm exec turbo dev
 ```
 
-To develop a specific package:
+### Develop a Specific Package
 
 ```sh
-# With global turbo
-turbo dev --filter=web
-
-# Or with your package manager
 pnpm exec turbo dev --filter=web
 ```
 
-Add a new package
+---
+
+## Additions
+
+### Add a New Package
 
 ```sh
 turbo gen
 ```
 
-Add a new shadcn component to UI
+### Add a New shadcn/ui Component to the Web App
 
 ```sh
 (cd apps/web && pnpm dlx shadcn@canary add [COMPONENT])
 ```
-
-More on filters: [Turborepo docs](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)

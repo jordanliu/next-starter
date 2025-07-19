@@ -14,6 +14,7 @@ import { Input } from "@repo/ui/components/input";
 import { Label } from "@repo/ui/components/label";
 import { cn } from "@repo/ui/lib/utils";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -31,6 +32,7 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -62,10 +64,7 @@ export function LoginForm({
           description: "You have been successfully signed in.",
         });
 
-        // Redirect or handle successful login
-        // window.location.href = "/dashboard";
-        // or use Next.js router
-        // router.push("/dashboard");
+        router.push("/");
       }
     } catch {
       toast.error("Something went wrong", {
