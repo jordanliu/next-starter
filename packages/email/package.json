@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "email dev --dir templates",
+    "dev": "email dev --dir templates -p 3333",
     "clean": "git clean -xdf .cache .turbo dist node_modules"
   },
   "dependencies": {
@@ -20,5 +20,15 @@
     "@types/react-dom": "^19.1.6",
     "react-email": "^4.2.3",
     "typescript": "^5.8.3"
+  },
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "require": "./index.ts"
+    },
+    "./templates/*": {
+      "import": "./templates/*.tsx",
+      "require": "./templates/*.tsx"
+    }
   }
 }
