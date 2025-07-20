@@ -1,8 +1,22 @@
 # next-starter
 
-A highly opinionated NextJS starter with authentication, database integration, reusable UI components, email support, and full monorepo tooling. Pre-configured for rapid, scalable development.
+A highly opinionated Next.js starter with authentication, database integration, reusable UI components, email support, and full monorepo tooling. Pre-configured for rapid, scalable development.
 
----
+## Project Structure
+
+```
+nextjs-starter/
+├── apps/
+│   └── web/                 # Main Next.js application
+├── packages/
+│   ├── auth/               # Authentication utilities
+│   ├── database/           # Database schema and utilities
+│   ├── email/              # Email templates and providers
+│   ├── eslint-config/      # Shared ESLint configurations
+│   ├── typescript-config/  # Shared TypeScript configurations
+│   └── ui/                 # Shared UI components
+└── turbo/                  # Turborepo configuration
+```
 
 ## Features
 
@@ -13,74 +27,113 @@ A highly opinionated NextJS starter with authentication, database integration, r
 - Form handling via [react-hook-form](https://react-hook-form.com)
 - Monorepo setup using [Turborepo](https://turbo.build/repo)
 
----
-
 ## Getting Started
 
 ### 1. Create a New Project
 
-```sh
+```bash
 npx create-next-app@latest [project-name] --use-pnpm --example https://github.com/jordanliu/next-starter.git
 cd [project-name]
 ```
 
 ### 2. Install Dependencies
 
-```sh
+```bash
 pnpm install
 ```
 
-### 3. Set Up the Database
+### 3. Set Up Environment Variables
 
-```sh
-pnpm --filter @repo/database run generate
-pnpm --filter @repo/database run migrate
+```bash
+cp apps/web/.env.example apps/web/.env
+# Edit the .env file with your database and authentication configuration
 ```
 
-### 4. Start the Development Server
+### 4. Set Up the Database
 
-```sh
+```bash
+pnpm --filter @repo/database generate
+pnpm --filter @repo/database migrate
+```
+
+### 5. Start the Development Server
+
+```bash
 pnpm dev
 ```
 
----
+The application will be available at [http://localhost:3000](http://localhost:3000).
 
-## Build
+## Available Commands
 
-To build all apps and packages:
+### Development
 
-```sh
-pnpm exec turbo build
-```
+- `pnpm dev` - Start development server for all packages
+- `pnpm build` - Build all packages and applications for production
+- `pnpm start` - Start production server (run build first)
 
----
+### Code Quality
 
-## Develop
+- `pnpm lint` - Run ESLint across all packages
+- `pnpm format` - Format code with Prettier
+- `pnpm check-types` - Run TypeScript type checking
 
-### Run Development Mode for All Apps and Packages
+### Database Operations
 
-```sh
-pnpm exec turbo dev
-```
+- `pnpm --filter @repo/database generate` - Generate database migrations
+- `pnpm --filter @repo/database migrate` - Apply database migrations
+- `pnpm --filter @repo/database studio` - Open Drizzle Studio
 
-### Develop a Specific Package
+### Package-Specific Development
 
-```sh
-pnpm exec turbo dev --filter=web
-```
+- `pnpm --filter web dev` - Run only the web application
+- `pnpm --filter @repo/ui dev` - Develop UI components in isolation
 
----
+## Project Management
 
-## Additions
+### Add a new package
 
-### Add a New Package
-
-```sh
+```bash
 turbo gen
 ```
 
-### Add a New shadcn/ui Component to the Web App
+### Add a new shadcn/ui component
 
-```sh
-(cd apps/web && pnpm dlx shadcn@canary add [COMPONENT])
+```bash
+cd apps/web && pnpm dlx shadcn@canary add [COMPONENT]
 ```
+
+### Install Package Dependencies
+
+```bash
+# Install to specific package
+pnpm --filter web add [package-name]
+pnpm --filter @repo/ui add [package-name]
+
+# Install to workspace root
+pnpm add -w [package-name]
+```
+
+## Deployment
+
+### Build for Production
+
+```bash
+pnpm build
+```
+
+### Deploy to Vercel
+
+The easiest way to deploy is using the [Vercel Platform](https://vercel.com/new):
+
+1. Connect your repository to Vercel
+2. Set your environment variables in the Vercel dashboard
+3. Deploy automatically on every push to main
+
+## Learn More
+
+- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API
+- [Turborepo Documentation](https://turbo.build/repo/docs) - Learn about monorepo management
+- [Drizzle ORM Documentation](https://orm.drizzle.team) - Learn about the database ORM
+- [Better Auth Documentation](https://github.com/jordanliu/better-auth) - Learn about authentication
+- [shadcn/ui Documentation](https://ui.shadcn.com) - Learn about the UI components
