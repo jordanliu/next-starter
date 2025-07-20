@@ -11,9 +11,29 @@ import {
 } from "@repo/ui/src/components/card";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Page() {
   const router = useRouter();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      await signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            router.push("/login");
+          },
+        },
+      });
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
   return (
     <div className="flex h-screen w-screen items-center justify-center">
       <Card className="w-full max-w-sm">
@@ -31,18 +51,11 @@ export default function Page() {
         <CardContent></CardContent>
         <CardFooter className="flex-col gap-2">
           <Button
-            onClick={() =>
-              signOut({
-                fetchOptions: {
-                  onSuccess: () => {
-                    router.push("/login");
-                  },
-                },
-              })
-            }
+            onClick={handleLogout}
             className="w-full"
+            disabled={isLoggingOut}
           >
-            Logout
+            {isLoggingOut ? "Logging out..." : "Logout"}
           </Button>
         </CardFooter>
       </Card>

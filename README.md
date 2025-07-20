@@ -21,8 +21,8 @@ nextjs-starter/
 ## Features
 
 - Authentication with [Better Auth](https://github.com/jordanliu/better-auth)
-- Database using [Drizzle ORM](https://orm.drizzle.team/) and PostgreSQL
-- UI components built with [shadcn/ui](https://ui.shadcn.com) and Tailwind CSS
+- Database using [Drizzle ORM](https://orm.drizzle.team/) and [PostgreSQL](https://www.postgresql.org/)
+- UI components built with [shadcn/ui](https://ui.shadcn.com) and [Tailwind CSS](https://tailwindcss.com)
 - Email support with [react-email](https://react.email)
 - Form handling via [react-hook-form](https://react-hook-form.com)
 - Monorepo setup using [Turborepo](https://turbo.build/repo)
@@ -103,7 +103,7 @@ turbo gen
 cd apps/web && pnpm dlx shadcn@canary add [COMPONENT]
 ```
 
-### Install Package Dependencies
+### Add dependencies
 
 ```bash
 # Install to specific package
@@ -121,19 +121,3 @@ pnpm add -w [package-name]
 ```bash
 pnpm build
 ```
-
-### Deploy to Vercel
-
-The easiest way to deploy is using the [Vercel Platform](https://vercel.com/new):
-
-1. Connect your repository to Vercel
-2. Set your environment variables in the Vercel dashboard
-3. Deploy automatically on every push to main
-
-## Learn More
-
-- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API
-- [Turborepo Documentation](https://turbo.build/repo/docs) - Learn about monorepo management
-- [Drizzle ORM Documentation](https://orm.drizzle.team) - Learn about the database ORM
-- [Better Auth Documentation](https://github.com/jordanliu/better-auth) - Learn about authentication
-- [shadcn/ui Documentation](https://ui.shadcn.com) - Learn about the UI components
