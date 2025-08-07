@@ -1,6 +1,6 @@
 # next-starter
 
-A highly opinionated Next.js starter with authentication, database integration, reusable UI components, email support, and full monorepo tooling. Pre-configured for rapid, scalable development.
+A highly opinionated Next.js starter with better-auth, drizzle, postgres, shadcn/ui, react-email, and turborepo. Pre-configured for rapid, scalable development.
 
 ## Project Structure
 
