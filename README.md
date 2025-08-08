@@ -20,7 +20,7 @@ nextjs-starter/
 
 ## Features
 
-- Authentication with [Better Auth](https://github.com/jordanliu/better-auth)
+- Authentication with [Better Auth](https://www.better-auth.com/)
 - Database using [Drizzle ORM](https://orm.drizzle.team/) and [PostgreSQL](https://www.postgresql.org/)
 - UI components built with [shadcn/ui](https://ui.shadcn.com) and [Tailwind CSS](https://tailwindcss.com)
 - Email support with [react-email](https://react.email)
