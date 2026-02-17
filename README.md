@@ -32,8 +32,8 @@ nextjs-starter/
 ### 1. Create a New Project
 
 ```bash
-git clone https://github.com/jordanliu/next-starter project_name
-cd project_name
+npx create-next-app@latest new-project --use-pnpm -e https://github.com/jordanliu/next-starter
+cd new-project
 ```
 
 ### 2. Install Dependencies
