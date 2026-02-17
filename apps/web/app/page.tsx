@@ -1,14 +1,14 @@
 "use client";
 
 import { signOut } from "@repo/auth/client";
-import { Button } from "@repo/ui/src/components/button";
+import { Button } from "@repo/ui/components/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-} from "@repo/ui/src/components/card";
+} from "@repo/ui/components/card";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
