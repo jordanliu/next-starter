@@ -6,8 +6,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types",
-    "typegen": "echo 'Skipping root typegen for monorepo'"
+    "check-types": "turbo run check-types"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
