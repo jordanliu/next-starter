@@ -1,24 +1,25 @@
 # button
 
-2026-07-03, transformation engine for a customized legacy `new-york` wrapper; migrated successfully to the Base UI Button primitive.
+2026-07-03, golden pair via the shadcn CLI; refreshed successfully to the official `base-nova` Button implementation and styling.
 
 ## Changed
 
-- `packages/ui/src/components/button.tsx:1` replaces Radix Slot with `@base-ui/react/button` while preserving every existing variant and class.
-- `packages/ui/src/components/button.tsx:38` replaces the `asChild` contract with Base UI's `render` contract through `ButtonPrimitive.Props`.
-- `packages/ui/package.json` adds `@base-ui/react` alongside Radix for the progressive migration step; `pnpm-lock.yaml` records the install.
+- `apps/web/components.json:3` and `packages/ui/components.json:3` now declare `base-nova`, so future CLI additions resolve Base UI components in the current default Nova style.
+- `packages/ui/src/components/button.tsx:1` was overwritten component-by-component from the official `base-nova/button` registry entry.
+- The refreshed wrapper keeps `@base-ui/react/button` and adds Nova's compact sizing, expanded icon sizes, active-state motion, and current focus/invalid styles.
 - Leftover scan is clean for this component: `grep -n "radix-ui\|@radix-ui" packages/ui/src/components/button.tsx` returns no matches.
 
 ## Left alone
 
-- `packages/ui/src/components/label.tsx` remains on Radix until its separate component migration.
+- Card, Input, and Label are refreshed separately so each style change remains independently reviewable.
 - `packages/ui/src/components/sonner.tsx` is intentionally untouched because Sonner is not Radix.
 
 ## Behavior changes
 
-- Polymorphic composition now uses Base UI's `render` prop instead of Radix Slot's `asChild`. No current consumer used `asChild`, so existing call sites are unchanged.
+- Default Button height changes from 36px to Nova's compact 32px, with updated hover, destructive, active-press, and focus treatments.
+- Nova adds `xs`, `icon-xs`, `icon-sm`, and `icon-lg` sizes. Existing variants and current consumers remain supported.
 
 ## Verify by hand
 
-- Open the login and registration pages and confirm default, outline, and submit buttons retain their styling.
-- Tab through the buttons and confirm focus rings, disabled behavior, and click handling remain intact.
+- Open the login and registration pages and confirm default, outline, and submit buttons use the compact Nova geometry.
+- Tab through the buttons and confirm focus rings, disabled behavior, active press motion, and click handling remain intact.
