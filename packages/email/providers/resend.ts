@@ -1,10 +1,12 @@
-import { render } from "@react-email/components";
+import { render } from "react-email";
 import type { EmailOptions, EmailResult } from "../types";
-import { resend } from "./resend/client";
+import { getResend } from "./resend/client";
 
 export async function sendViaResend(
   options: EmailOptions
 ): Promise<EmailResult> {
+  const resend = getResend();
+
   if (!resend) {
     return {
       success: false,

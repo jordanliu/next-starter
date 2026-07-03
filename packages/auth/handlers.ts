@@ -1,6 +1,12 @@
 import { toNextJsHandler } from "better-auth/next-js";
 import "server-only";
 
-import { auth } from "./server";
+import { getAuth } from "./server";
 
-export const { POST, GET } = toNextJsHandler(auth);
+export function GET(request: Request) {
+  return toNextJsHandler(getAuth()).GET(request);
+}
+
+export function POST(request: Request) {
+  return toNextJsHandler(getAuth()).POST(request);
+}
