@@ -7,7 +7,7 @@ import {
   Html,
   Link,
   Text,
-} from "@react-email/components";
+} from "react-email";
 
 export const VerifyEmail = ({
   name,

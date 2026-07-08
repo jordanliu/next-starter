@@ -1,8 +1,16 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+let database: ReturnType<typeof drizzle> | undefined;
 
-export const database = drizzle(pool);
+export function getDatabase() {
+  if (!database) {
+    const pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+    });
+
+    database = drizzle(pool);
+  }
+
+  return database;
+}
