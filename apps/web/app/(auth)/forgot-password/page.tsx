@@ -5,7 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/card";
-import { Button } from "@repo/ui/components/button";
+import { buttonVariants } from "@repo/ui/components/button";
+import { cn } from "@repo/ui/lib/utils";
 import Link from "next/link";
 
 export default function ForgotPasswordPage() {
@@ -18,9 +19,12 @@ export default function ForgotPasswordPage() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Button render={<Link href="/login" />} size="lg" className="w-full">
+        <Link
+          href="/login"
+          className={cn(buttonVariants({ size: "lg" }), "w-full")}
+        >
           Back to login
-        </Button>
+        </Link>
       </CardContent>
     </Card>
   );
