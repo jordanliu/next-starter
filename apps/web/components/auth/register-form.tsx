@@ -10,8 +10,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/card";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@repo/ui/components/field";
 import { Input } from "@repo/ui/components/input";
-import { Label } from "@repo/ui/components/label";
 import { cn } from "@repo/ui/lib/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -83,57 +88,50 @@ export function RegisterForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Create Account</CardTitle>
+          <CardTitle>Create Account</CardTitle>
           <CardDescription>Sign up to get started</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="name">Name</Label>
+            <FieldGroup>
+              <Field data-invalid={!!errors.name}>
+                <FieldLabel htmlFor="name">Name</FieldLabel>
                 <Input
                   id="name"
                   type="text"
                   placeholder="John Doe"
+                  aria-invalid={!!errors.name}
                   {...register("name")}
-                  className={cn(errors.name && "border-destructive")}
                 />
-                {errors.name && (
-                  <p className="text-sm text-destructive">
-                    {errors.name.message}
-                  </p>
-                )}
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
+                <FieldError errors={[errors.name]} />
+              </Field>
+              <Field data-invalid={!!errors.email}>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
                   type="email"
                   placeholder="m@example.com"
+                  aria-invalid={!!errors.email}
                   {...register("email")}
-                  className={cn(errors.email && "border-destructive")}
                 />
-                {errors.email && (
-                  <p className="text-sm text-destructive">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="password">Password</Label>
+                <FieldError errors={[errors.email]} />
+              </Field>
+              <Field data-invalid={!!errors.password}>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
                 <Input
                   id="password"
                   type="password"
+                  aria-invalid={!!errors.password}
                   {...register("password")}
-                  className={cn(errors.password && "border-destructive")}
                 />
-                {errors.password && (
-                  <p className="text-sm text-destructive">
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
-              <Button type="submit" className="w-full" disabled={isLoading}>
+                <FieldError errors={[errors.password]} />
+              </Field>
+              <Button
+                type="submit"
+                size="lg"
+                className="w-full"
+                disabled={isLoading}
+              >
                 {isLoading ? "Creating account..." : "Create Account"}
               </Button>
               <div className="text-center text-sm">
@@ -142,7 +140,7 @@ export function RegisterForm({
                   Sign in
                 </Link>
               </div>
-            </div>
+            </FieldGroup>
           </form>
         </CardContent>
       </Card>
