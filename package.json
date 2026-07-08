@@ -11,11 +11,11 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@turbo/gen": "^2.10.3",
+    "@turbo/gen": "^2.10.4",
     "prettier": "^3.9.4",
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "turbo": "^2.10.3",
+    "turbo": "^2.10.4",
     "typescript": "6.0.3"
   },
   "packageManager": "pnpm@11.9.0",
