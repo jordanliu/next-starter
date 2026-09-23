@@ -1,20 +1,87 @@
 import { getDatabase } from "@repo/database";
 import * as schema from "@repo/database/schema";
 import { sendEmail } from "@repo/email";
+import ResetPasswordEmail from "@repo/email/templates/reset-password";
 import VerifyEmail from "@repo/email/templates/verify-email";
-import { betterAuth } from "better-auth";
+import { betterAuth, type SocialProviders } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
+import { after } from "next/server";
+import "server-only";
+
+type SocialProviderAvailability = {
+  github: boolean;
+  google: boolean;
+};
+
+function sendEmailAfterResponse(options: Parameters<typeof sendEmail>[0]) {
+  after(async () => {
+    const result = await sendEmail(options);
+
+    if (!result.success) {
+      console.error(result.message || "Failed to send authentication email");
+    }
+  });
+}
+
+export function getSocialProviderAvailability(): SocialProviderAvailability {
+  return {
+    github: Boolean(
+      process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET
+    ),
+    google: Boolean(
+      process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
+    ),
+  };
+}
+
+function getSocialProviders(): SocialProviders {
+  const providers: SocialProviders = {};
+  const githubClientId = process.env.GITHUB_CLIENT_ID;
+  const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+  const googleClientId = process.env.GOOGLE_CLIENT_ID;
+  const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+  if (githubClientId && githubClientSecret) {
+    providers.github = {
+      clientId: githubClientId,
+      clientSecret: githubClientSecret,
+    };
+  }
+
+  if (googleClientId && googleClientSecret) {
+    providers.google = {
+      clientId: googleClientId,
+      clientSecret: googleClientSecret,
+    };
+  }
+
+  return providers;
+}
 
 function createAuth() {
   return betterAuth({
+    baseURL: process.env.BETTER_AUTH_URL,
+    secret: process.env.BETTER_AUTH_SECRET,
     emailAndPassword: {
       enabled: true,
+      requireEmailVerification: true,
+      revokeSessionsOnPasswordReset: true,
+      sendResetPassword: async ({ user, url }) => {
+        sendEmailAfterResponse({
+          react: ResetPasswordEmail({
+            name: user.name,
+            resetUrl: url,
+          }),
+          to: user.email,
+          subject: "Reset your password",
+        });
+      },
     },
     emailVerification: {
       sendOnSignUp: true,
       sendVerificationEmail: async ({ user, url }) => {
-        await sendEmail({
+        sendEmailAfterResponse({
           react: VerifyEmail({
             name: user.name,
             verificationUrl: url,
@@ -34,6 +101,7 @@ function createAuth() {
         maxAge: 5 * 60,
       },
     },
+    socialProviders: getSocialProviders(),
     plugins: [nextCookies()],
   });
 }
@@ -43,4 +111,8 @@ let auth: ReturnType<typeof createAuth> | undefined;
 export function getAuth(): ReturnType<typeof createAuth> {
   auth ??= createAuth();
   return auth;
+}
+
+export function getSession(requestHeaders: Headers) {
+  return getAuth().api.getSession({ headers: requestHeaders });
 }

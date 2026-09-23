@@ -5,7 +5,7 @@ A highly opinionated Next.js starter with better-auth, drizzle, postgres, shadcn
 ## Project Structure
 
 ```
-nextjs-starter/
+next-starter/
 ├── apps/
 │   └── web/                 # Main Next.js application
 ├── packages/
@@ -21,6 +21,8 @@ nextjs-starter/
 ## Features
 
 - Authentication with [Better Auth](https://www.better-auth.com/)
+- Email/password registration, required verification, sign-in, and password reset
+- Optional GitHub and Google sign-in (buttons appear only when configured)
 - Database using [Drizzle ORM](https://orm.drizzle.team/) and [PostgreSQL](https://www.postgresql.org/)
 - UI components built with [shadcn/ui](https://ui.shadcn.com) and [Tailwind CSS](https://tailwindcss.com)
 - Email support with [react-email](https://react.email)
@@ -46,7 +48,9 @@ pnpm install
 
 ```bash
 cp apps/web/.env.example apps/web/.env.local
-# Edit the .env.local file with your database and authentication configuration
+# Edit .env.local with your database, authentication, and email configuration
+# Generate `BETTER_AUTH_SECRET` with `openssl rand -base64 32`.
+# GitHub and Google sign-in are optional; each provider is enabled only when both its client ID and client secret are configured.
 ```
 
 ### 4. Set Up the Database
@@ -80,6 +84,7 @@ pnpm start        # Start production server (requires build)
 pnpm lint         # Run ESLint across all packages
 pnpm format       # Format code with Prettier
 pnpm check-types  # Run TypeScript type checking
+pnpm test         # Run package integration tests
 ```
 
 ### Database Operations
@@ -87,8 +92,8 @@ pnpm check-types  # Run TypeScript type checking
 ```bash
 pnpm --filter @repo/database generate  # Generate database migrations
 pnpm --filter @repo/database migrate   # Apply database migrations
+pnpm --filter @repo/database push      # Sync a development database without a migration
 pnpm --filter @repo/database studio    # Open Drizzle Studio for database management
-pnpm --filter @repo/database seed      # Seed database with initial data
 ```
 
 ### Package-Specific
@@ -138,21 +143,23 @@ pnpm --filter web add -D [package-name]
 # After modifying schema files
 pnpm --filter @repo/database generate  # Generate new migration
 pnpm --filter @repo/database migrate   # Apply to local database
-
-# Reset database (development only)
-pnpm --filter @repo/database reset
 ```
+
+Commit the generated SQL and Drizzle metadata in `packages/database/drizzle`.
+Use `push` only for disposable development databases; use reviewed migrations
+for shared and production databases.
 
 ## Deployment
 
 ### 1. Set Up Production Database
 
-Ensure your production PostgreSQL database is ready and accessible. Update your production environment variables with the database connection string.
+Ensure your production PostgreSQL database is ready and accessible. Configure
+the deployment environment variables before building or starting the app.
 
 ### 2. Run Database Migrations
 
 ```bash
-# Apply migrations to production database
+# Apply committed migrations once per deployment, before starting the new app
 DATABASE_URL="your-production-db-url" pnpm --filter @repo/database migrate
 ```
 
@@ -164,11 +171,37 @@ pnpm build
 
 ### 4. Deploy
 
-Deploy the built application using your preferred hosting platform. Ensure the following environment variables are configured:
+For a Node.js deployment, start the production server after the build:
+
+```bash
+pnpm start
+```
+
+On Vercel, set the repository root as the project root and use `pnpm build` as
+the build command. Run database migrations as a separate, single-run release
+step rather than from every application instance.
+
+Ensure the following environment variables are configured:
 
 ```env
 DATABASE_URL=your-production-database-url
 BETTER_AUTH_SECRET=your-secret-key
 BETTER_AUTH_URL=https://your-domain.com
-# Add other environment variables as needed
+EMAIL_FROM=noreply@your-domain.com
+
+# Configure Resend...
+EMAIL_API_KEY=your-resend-api-key
+
+# ...or configure SMTP instead.
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=your-smtp-user
+SMTP_PASS=your-smtp-password
+SMTP_SECURE=false
+
+# Optional social providers
+GITHUB_CLIENT_ID=your-github-client-id
+GITHUB_CLIENT_SECRET=your-github-client-secret
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
 ```

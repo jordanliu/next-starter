@@ -1,41 +1,24 @@
-"use client";
-
-import { signOut } from "@repo/auth/client";
-import { Button } from "@repo/ui/components/button";
+import { LogoutButton } from "@/components/auth/logout-button";
+import { getSession } from "@repo/auth/server";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
 } from "@repo/ui/components/card";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-  const router = useRouter();
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
+export default async function Page() {
+  const session = await getSession(await headers());
 
-  const handleLogout = async () => {
-    setIsLoggingOut(true);
-    try {
-      await signOut({
-        fetchOptions: {
-          onSuccess: () => {
-            router.push("/login");
-          },
-        },
-      });
-    } catch (error) {
-      console.error("Logout failed:", error);
-    } finally {
-      setIsLoggingOut(false);
-    }
-  };
+  if (!session) {
+    redirect("/login");
+  }
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
+    <main className="flex min-h-svh items-center justify-center p-6">
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardDescription>
@@ -46,19 +29,13 @@ export default function Page() {
               width={100}
               height={100}
             />
+            <span className="sr-only">Signed in as {session.user.name}</span>
           </CardDescription>
         </CardHeader>
-        <CardContent></CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button
-            onClick={handleLogout}
-            className="w-full"
-            disabled={isLoggingOut}
-          >
-            {isLoggingOut ? "Logging out..." : "Logout"}
-          </Button>
+          <LogoutButton />
         </CardFooter>
       </Card>
-    </div>
+    </main>
   );
 }
